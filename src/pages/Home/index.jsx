@@ -3,10 +3,19 @@ import styles from './Home.module.css';
 import { Banner } from "components/Banner";
 import { Card } from "components/Card";
 import { Title } from "components/Title";
-
-import videos from '../../json/db.json';
+import { useEffect, useState } from 'react';
 
 function Home() {
+    const [videos, setVideos] = useState([]);
+
+    useEffect(() => {
+        fetch('https://my-json-server.typicode.com/O-Theu/cenetag-api/videos')
+            .then(res => res.json())
+            .then(data => {
+                setVideos(data);
+            })
+    }, [])
+
     return (
         <>
             <Banner imagem="home" />

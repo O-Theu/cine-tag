@@ -5,13 +5,19 @@ import { Title } from 'components/Title';
 
 import { useParams } from 'react-router-dom';
 
-import videos from '../../json/db.json';
 import { NotFound } from 'pages/NotFound';
+import { useEffect, useState } from 'react';
 
 export function Player() {
     const { id } = useParams();
 
-    const video = videos.find((video) => video.id === Number(id));
+    const [video, setVideo] = useState([]);
+
+    useEffect(() => {
+        fetch(`https://my-json-server.typicode.com/O-Theu/cenetag-api/videos?id=${id}`)
+            .then(res => res.json())
+            .then(data => setVideo(...data));
+    }, [id])
 
     if (!video) {
         return <NotFound />
@@ -21,7 +27,7 @@ export function Player() {
         <>
             <Banner imagem="player" />
             <Title>
-                <h1>PLayer</h1>
+                <h1>Player</h1>
             </Title>
             <section className={styles.container}>
                 <iframe 
